@@ -11,7 +11,7 @@ import PrivateRoute from "./components/Routes/Private";
 import ForgotPasssword from "./pages/Auth/ForgotPassword";
 import AdminRoute from "./components/Routes/AdminRoute";
 import AdminDashboard from "./pages/Admin/AdminDashboard";
-import { CreateCategory } from "./pages/Admin/CreateCategory";
+import  CreateCategory  from "./pages/Admin/CreateCategory";
 import { CreateProduct } from "./pages/Admin/CreateProduct";
 import { Users } from "./pages/Admin/Users";
 import { Orders } from "./pages/user/Orders";
