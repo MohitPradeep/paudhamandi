@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import DropIn from "braintree-web-drop-in-react";
 import axios from "axios";
 import toast from "react-hot-toast";
+import "../styles/CartStyles.css"
 
 const CartPage = () => {
   const [auth, setAuth] = useAuth();
@@ -108,7 +109,7 @@ const CartPage = () => {
                 <div className="col-md-8">
                   <p>{p.name}</p>
                   <p>{p.description.substring(0, 30)}</p>
-                  <p>Price : {p.price}</p>
+                  <p>Price :₹ {p.price}</p>
                   <button
                     className="btn btn-danger"
                     onClick={() => removeCartItem(p._id)}
@@ -180,7 +181,6 @@ const CartPage = () => {
                     onClick={handlePayment}
                     disabled={loading || !instance || !auth?.user?.address}
                   >
-          
                     {loading ? "Processing ...." : "Make Payment"}
                   </button>
                 </>
