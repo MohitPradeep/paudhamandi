@@ -375,3 +375,56 @@ export const braintreePaymentController = async (req, res) => {
     console.log(error);
   }
 };
+
+// CREATE PRODUCT REVIEW AND COMMENT
+export const productReviewController = async (req, res) => {
+  try {
+    const { review, rating } = req.body;
+    // find product
+    const product = await productModel.findById(req.params.pid);
+    // check previous review
+    const alreadyReviewed = product.reviews.find(
+      (r) => r.user.toString() === req.user._id.toString()
+    );
+    if (alreadyReviewed) {
+      return res.status(400).send({
+        success: false,
+        message: "Product Alredy Reviewed",
+      });
+    }
+    // review object
+    const addreview = {
+      name: req.user.name,
+      rating: Number(rating),
+      review,
+      user: req.user._id,
+    };
+    // passing review object to reviews array
+    product.reviews.push(addreview);
+    // number or reviews
+    product.numReviews = product.reviews.length;
+    product.rating =
+      product.reviews.reduce((acc, item) => item.rating + acc, 0) /
+      product.reviews.length;
+    // save
+    await product.save();
+    res.status(200).send({
+      success: true,
+      message: "Review Added!",
+    });
+  } catch (error) {
+    console.log(error);
+    // cast error ||  OBJECT ID
+    if (error.name === "CastError") {
+      return res.status(500).send({
+        success: false,
+        message: "Invalid Id",
+      });
+    }
+    res.status(500).send({
+      success: false,
+      message: "Error In Review Comment API",
+      error,
+    });
+  }
+};
