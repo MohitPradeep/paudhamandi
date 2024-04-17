@@ -1,0 +1,30 @@
+/* categories.css */
+
+.containers {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+  }
+  
+  .category-link {
+    text-decoration: none;
+  }
+  
+  .category-btn {
+    padding: 10px 20px; 
+    font-size: 50px; 
+    background-color: #007bff; 
+    color: #fff; 
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease; 
+  }
+  
+  .category-btn:hover {
+    background-color: #0056b3;
+    color: #fff;
+    padding: 12px 24px;
+    font-size: 18px; 
+  }
+  

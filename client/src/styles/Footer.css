@@ -1,0 +1,59 @@
+.footer {
+    background-color: #333;
+    color: #fff;
+    padding: 30px 0;
+  }
+  
+  .footer h1, .footer h2 {
+    color: #fff;
+  }
+  
+  .footer-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  
+  .social-media {
+    margin-bottom: 20px;
+  }
+  
+  .social-media a {
+    color: #fff;
+    margin-right: 10px;
+  }
+  
+  .newsletter input[type="email"] {
+    padding: 8px;
+    margin-right: 10px;
+  }
+  
+  .newsletter button {
+    padding: 8px 20px;
+    background-color: #fff;
+    color: #333;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .customer-support {
+    margin-bottom: 20px;
+  }
+  
+  .trust-badges img {
+    margin-right: 10px;
+  }
+  
+  .sitemap ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .sitemap ul li {
+    margin-bottom: 5px;
+  }
+  
+  .payment-methods img {
+    margin-right: 10px;
+  }
+  
