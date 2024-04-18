@@ -11,6 +11,7 @@ import {
   productFiltersController,
   productListController,
   productPhotoController,
+  productReviewController,
   relatedProductController,
   searchProductController,
   updateProductController,
@@ -73,5 +74,8 @@ router.get("/braintree/token", braintreeTokenController);
 
 //payment
 router.post("/braintree/payment", requireSignIn, braintreePaymentController);
+
+//Review
+router.put("/review/:pid",productReviewController);
 
 export default router;
