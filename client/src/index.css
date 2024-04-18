@@ -106,3 +106,57 @@
   text-decoration: none !important;
   color: black !important;
 }
+
+
+/* Add this to your existing CSS file or create a new one */
+
+/* .autoscroll-section {
+  width: 30%;
+  padding: 20px 0;
+  background-color: black;
+  overflow: hidden;
+  max-width: 1000px;
+  margin: 20px auto 0;
+  position: relative;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+
+
+.autoscroll-container {
+  display: flex;
+  animation: scroll 10s linear infinite;
+  width: 750px;
+  height: 100%;
+}
+
+.autoscroll-item {
+  flex: 0 0 375px;
+  max-width: 375px;
+}
+
+.autoscroll-item img {
+  width: 100%;
+  height: auto;
+  max-height: 100%;
+}
+
+.autoscroll-item:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 1px;
+  height: 100%;
+  background-color: #ccc;
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-375px);
+  }
+} */

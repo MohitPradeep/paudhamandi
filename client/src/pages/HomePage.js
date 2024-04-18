@@ -9,6 +9,30 @@ import Layout from "./../components/Layouts/Layout";
 import { AiOutlineReload } from "react-icons/ai";
 import "../styles/HomePage.css";
 
+// New component for auto-scrolling section
+const AutoScrollingSection = () => {
+  // Your auto-scrolling content goes here
+  return (
+    <div className="autoscroll-section">
+    
+    <div className="autoscroll-container">
+  {/* Example image carousel */}
+  
+  <div className="autoscroll-item">
+    <img 
+      src="/images/Spring-Banners-Planters.jpg" 
+      alt="Product 1" 
+      style={{ maxWidth: "auto", maxHeight: "300px", width: "100%", height: "auto" }} // Adjust these values as needed
+    />
+  </div>
+  {/* Add more product items as needed */}
+</div>
+  {/* Add more product items as needed */}
+</div>
+    
+  );
+};
+
 const HomePage = () => {
   const navigate = useNavigate();
   const [cart, setCart] = useCart();
@@ -108,13 +132,15 @@ const HomePage = () => {
   };
   return (
     <Layout title={"ALl Products - Best offers "}>
-      {/* banner image */}
-      <img
+       {/* <img
         src="/images/logo.jpeg"
         className="banner-img"
         alt="bannerimage"
         width={"100%"}
-      />
+      /> */}
+      <AutoScrollingSection /> {/* Add auto-scrolling section */}
+      {/* banner image */}
+     
       {/* banner image */}
       <div className="container-fluid row mt-3 home-page">
         <div className="col-md-3 filters">
@@ -224,3 +250,4 @@ const HomePage = () => {
 };
 
 export default HomePage;
+
