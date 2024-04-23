@@ -29,18 +29,25 @@ const Orders = () => {
     // Create a new jsPDF instance
     const pdf = new jsPDF();
 
+    console.log(auth?.user)
+ 
     // Add content to the PDF
-    pdf.text("Order Details", 20, 20);
-    pdf.text(`Order Number: ${order._id}`, 20, 30);
-    pdf.text(`Status: ${order.status}`, 20, 40);
-    pdf.text(`Buyer: ${order.buyer.name}`, 20, 50);
-    pdf.text(`Date: ${moment(order.createAt).format("MMMM Do YYYY, h:mm:ss a")}`, 20, 60);
-    pdf.text(`Payment Status: ${order.payment.success ? "Success" : "Failed"}`, 20, 70);
-    pdf.text(`Quantity: ${order.products.length}`, 20, 80);
+    pdf.text("Invoice",90,10)
+    pdf.text("User Details", 20, 30);
+    pdf.text(`Name: ${auth?.user?.name}`, 20, 40);
+    pdf.text(`Address: ${auth?.user?.address}`, 20, 50);
+
+    pdf.text("Order Details", 20, 70);
+    pdf.text(`Order Number: ${order._id}`, 20, 80);
+    pdf.text(`Status: ${order.status}`, 20, 90);
+    pdf.text(`Buyer: ${order.buyer.name}`, 20, 100);
+    pdf.text(`Date: ${moment(order.createdAt).format("MMMM Do YYYY, h:mm:ss a")}`, 20, 110);
+    pdf.text(`Payment Status: ${order.payment.success ? "Success" : "Failed"}`, 20, 120);
+    pdf.text(`Quantity: ${order.products.length}`, 20, 130);
    
 
-    pdf.text("Products:", 20, 100);
-    let y = 110;
+    pdf.text("Products:", 20, 150);
+    let y = 160;
     order.products.forEach((product) => {
       pdf.text(`${product.name} - Price: ${product.price}`, 20, y);
       y += 10;
@@ -66,6 +73,7 @@ const Orders = () => {
     window.URL.revokeObjectURL(url);
   };
 
+
   return (
     <Layout title={"Your Orders"}>
       <div className="container-flui p-3 m-3 dashboard">
@@ -76,6 +84,7 @@ const Orders = () => {
           <div className="col-md-9">
             <h1 className="text-center">All Orders</h1>
             {orders?.map((o, i) => {
+
               return (
                 <div className="border shadow" key={o._id}>
                   <table className="table">
@@ -95,7 +104,7 @@ const Orders = () => {
                         <td>{i + 1}</td>
                         <td>{o?.status}</td>
                         <td>{o?.buyer?.name}</td>
-                        <td>{moment(o.createAt).format("MMMM Do YYYY, h:mm:ss a")}</td>
+                        <td>{moment(o.createdAt).format("MMMM Do YYYY, h:mm:ss a")}</td>
                         <td>{o?.payment.success ? "Success" : "Failed"}</td>
                         <td>{o?.products?.length}</td>
                         <td>
