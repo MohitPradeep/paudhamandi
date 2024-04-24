@@ -229,6 +229,7 @@ const ProductDetails = () => {
           <h6>Description: {product.description}</h6>
           <h6>Price: ₹ {product.price}</h6>
           <h6>Category: {product?.category?.name}</h6>
+         
           {/* Rating UI */}
           <div className="text-center">
             <Rate value={product.avgRating} disabled />
@@ -307,6 +308,13 @@ const ProductDetails = () => {
                 <h5 className="card-title">{p.name}</h5>
                 <p className="card-text">{p.description.substring(0, 30)}...</p>
                 <p className="card-text"> ₹ {p.price}</p>
+                <p className="card-text">
+                    {p?.quantity === 0 ? (
+                    <h3 style={{ color: "red" }}>Out of Stock</h3>
+                    ) : (
+                   <h3 style={{ color: "green" }}>In Stock</h3>
+                    )}
+                  </p>
                 <p className="card-text">
                   {[1, 2, 3, 4, 5].map((r) => {
                     if (r <= p?.rating) {

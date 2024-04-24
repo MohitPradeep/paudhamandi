@@ -111,6 +111,13 @@ const CartPage = () => {
                   <p>{p.description.substring(0, 30)}</p>
                   <p>Price :₹ {p.price}</p>
                   <p>Quantity : 1</p>
+                  <p className="card-text">
+                    {p?.quantity === 0 ? (
+                    <h3 style={{ color: "red" }}>Out of Stock</h3>
+                    ) : (
+                   <h3 style={{ color: "green" }}>In Stock</h3>
+                    )}
+                    </p>
                   <p className="card-text"> {[1, 2, 3, 4, 5].map((r) => {
                 if (r <= p?.rating) {
                 if (r === Math.floor(p?.rating)) {
