@@ -115,7 +115,6 @@
 // };
 
 // export default ProductDetails;
-
 import React, { useState, useEffect } from "react";
 import Layout from "./../components/Layouts/Layout";
 import axios from "axios";
@@ -133,6 +132,9 @@ const ProductDetails = () => {
   const [relatedProducts, setRelatedProducts] = useState([]);
   const [review, setReview] = useState(""); // State for review
   const [rating, setRating] = useState(0); // State for rating
+
+  const [showReviews, setShowReviews] = useState(false);
+  const [reviews, setReviews] = useState([]);
 
   // Initialize details
   useEffect(() => {
@@ -190,6 +192,25 @@ const ProductDetails = () => {
     }
   };
 
+  // Toggle display of reviews
+  const toggleReviews = () => {
+    setShowReviews(!showReviews);
+    if (!showReviews) {
+      // Fetch reviews if not already fetched
+      fetchReviews();
+    }
+  };
+
+  // Fetch reviews from database
+  const fetchReviews = async () => {
+    try {
+      const { data } = await axios.get(`/api/v1/product/review/${product._id}`);
+      setReviews(data?.reviews);
+    } catch (error) {
+      console.error("Error fetching reviews:", error);
+    }
+  };
+
   return (
     <Layout>
       <div className="row container mt-2">
@@ -217,13 +238,13 @@ const ProductDetails = () => {
             value={review}
             onChange={handleReviewChange}
             placeholder="Enter your review"
-            className="form-control mt-3"
+            className="form-control ms-1"
           />
           <div className="text-center">
             <Rate value={rating} onChange={handleRatingChange} />
           </div>
           <button
-            className="btn btn-dark mt-3"
+            className="btn btn-dark ms-1"
             onClick={submitReview}
           >
             Submit Review
@@ -239,6 +260,33 @@ const ProductDetails = () => {
             }}>
             Add to Cart
           </button>
+          {/* Button to show/hide reviews */}
+          <button className="btn btn-primary ms-1" onClick={toggleReviews}>
+            {showReviews ? 'Hide Reviews' : 'Show Reviews'}
+          </button>
+          {/* Display reviews if showReviews is true */}
+          {showReviews && (
+            <div>
+              <hr />
+              <h6>Reviews:</h6>
+              {reviews.length === 0 ? (
+                <p>No reviews available</p>
+              ) : (
+                <ul>
+                  {reviews.map((review) => (
+                    <li key={review._id}>
+                      <p>{review.review}</p>
+                      <p>
+                        {[1, 2, 3, 4, 5].map((r) => {
+                          return r <= review.rating ? '⭐' : '☆';
+                        })}
+                      </p>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          )}
         </div>
       </div>
       <hr />
@@ -249,7 +297,7 @@ const ProductDetails = () => {
         )}
         <div className="d-flex flex-wrap">
           {relatedProducts?.map((p) => (
-            <div className="card m-2" style={{ width: "18rem" }}>
+            <div className="card m-2" style={{ width: "18rem" }} key={p._id}>
               <img
                 src={`/api/v1/product/product-photo/${p?._id}`}
                 className="card-img-top"
@@ -259,14 +307,27 @@ const ProductDetails = () => {
                 <h5 className="card-title">{p.name}</h5>
                 <p className="card-text">{p.description.substring(0, 30)}...</p>
                 <p className="card-text"> ₹ {p.price}</p>
+                <p className="card-text">
+                  {[1, 2, 3, 4, 5].map((r) => {
+                    if (r <= p?.rating) {
+                      if (r === Math.floor(p?.rating)) {
+                        return "⭐";
+                      } else if (p?.rating - r > 0.5) {
+                        return "⭐";
+                      }
+                    }
+                    return "☆";
+                  })}
+                  ({p?.numReviews})
+                </p>
                 <button
                   className="btn btn-primary ms-1"
                   onClick={() => navigate(`/product/${p.slug}`)}
                 >
                   More Details
                 </button>
-                      
-                <button class="btn btn-secondary ms-1"
+                <button
+                  className="btn btn-secondary ms-1"
                   onClick={() => {
                     setCart([...cart, p]);
                     localStorage.setItem(
@@ -274,7 +335,10 @@ const ProductDetails = () => {
                       JSON.stringify([...cart, p])
                     );
                     toast.success("Item Added to cart");
-                  }}>Add to Cart</button>
+                  }}
+                >
+                  Add to Cart
+                </button>
               </div>
             </div>
           ))}

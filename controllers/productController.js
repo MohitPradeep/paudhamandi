@@ -376,7 +376,7 @@ export const braintreePaymentController = async (req, res) => {
   }
 };
 
-// CREATE PRODUCT REVIEW AND COMMENT
+// CREATE PRODUCT REVIEW AND RATING
 export const productReviewController = async (req, res) => {
   try {
     const { review, rating } = req.body;
@@ -399,6 +399,7 @@ export const productReviewController = async (req, res) => {
       review,
       user: req.user._id,
     };
+
     // passing review object to reviews array
     product.reviews.push(addreview);
     // number or reviews
@@ -428,3 +429,18 @@ export const productReviewController = async (req, res) => {
     });
   }
 };
+
+// Controller to get reviews by product ID
+export const getReviewsByProductId = async (req, res) => {
+  try {
+    const { pid } = req.params;
+
+    const product = await productModel.findOne({ _id: pid });
+
+    res.json({ reviews:  product?.reviews});
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+

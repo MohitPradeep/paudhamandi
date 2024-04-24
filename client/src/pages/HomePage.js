@@ -198,6 +198,29 @@ const HomePage = () => {
                   <p className="card-text ">
                     {p.description.substring(0, 60)}...
                   </p>
+                  <p className="card-text">
+                    {p?.quantity === 0 ? (
+                    <h3 style={{ color: "red" }}>Out of Stock</h3>
+                    ) : (
+                   <h3 style={{ color: "green" }}>In Stock</h3>
+                    )}
+                    </p>
+
+                  <p className="card-text"> {[1, 2, 3, 4, 5].map((r) => {
+                if (r <= p?.rating) {
+                if (r === Math.floor(p?.rating)) {
+        
+                return "⭐";
+                } else if (p?.rating - r > 0.5) {
+     
+                return "⭐";
+                }
+               }
+  
+               return "☆";
+               })}
+              ({p?.numReviews})
+               </p>
                   <div className="card-name-price">
                     <button
                       className="btn btn-info ms-1"
@@ -376,7 +399,7 @@ export default HomePage;
 //   };
 
 //   // Submit review and rating
-//   const submitReview = async (productId) => {
+//   const submitReview = async () => {
 //     try {
 //       await axios.post(`/api/v1/product/add-review/${productId}`, {
 //         review,

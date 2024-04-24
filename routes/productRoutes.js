@@ -5,6 +5,7 @@ import {
   createProductController,
   deleteProductController,
   getProductController,
+  getReviewsByProductId,
   getSingleProductController,
   productCategoryController,
   productCountController,
@@ -76,6 +77,9 @@ router.get("/braintree/token", braintreeTokenController);
 router.post("/braintree/payment", requireSignIn, braintreePaymentController);
 
 //Review
-router.put("/review/:pid",productReviewController);
+router.put("/review/:pid", requireSignIn, productReviewController);
+
+// New Route for fetching reviews
+router.get('/review/:pid', requireSignIn, getReviewsByProductId);
 
 export default router;

@@ -53,6 +53,21 @@ const CategoryProduct = () => {
                       {p.description.substring(0, 30)}...
                     </p>
                     <p className="card-text">  ₹ {p.price}</p>
+                    <p className="card-text"> {[1, 2, 3, 4, 5].map((r) => {
+                if (r <= p?.rating) {
+                if (r === Math.floor(p?.rating)) {
+        
+                return "⭐";
+                } else if (p?.rating - r > 0.5) {
+     
+                return "⭐";
+                }
+               }
+  
+               return "☆";
+               })}
+              ({p?.numReviews})
+               </p>
                     <button
                       className="btn btn-primary ms-1"
                       onClick={() => navigate(`/product/${p.slug}`)}
