@@ -130,9 +130,8 @@ const ProductDetails = () => {
   const navigate = useNavigate();
   const [product, setProduct] = useState({});
   const [relatedProducts, setRelatedProducts] = useState([]);
-  const [review, setReview] = useState(""); // State for review
-  const [rating, setRating] = useState(0); // State for rating
-
+  const [review, setReview] = useState(""); 
+  const [rating, setRating] = useState(0); 
   const [showReviews, setShowReviews] = useState(false);
   const [reviews, setReviews] = useState([]);
 
@@ -230,11 +229,7 @@ const ProductDetails = () => {
           <h6>Price: ₹ {product.price}</h6>
           <h6>Category: {product?.category?.name}</h6>
          
-          {/* Rating UI */}
-          <div className="text-center">
-            <Rate value={product.avgRating} disabled />
-          </div>
-          {/* Review and Rating input */}
+         
           <textarea
             value={review}
             onChange={handleReviewChange}
@@ -250,22 +245,32 @@ const ProductDetails = () => {
           >
             Submit Review
           </button>
-          <button className="btn btn-dark ms-1"
-            onClick={() => {
-              setCart([...cart, product]);
-              localStorage.setItem(
-                "cart",
-                JSON.stringify([...cart, product])
-              );
-              toast.success("Item Added to cart");
-            }}>
-            Add to Cart
-          </button>
+         <button
+                     className="btn btn-dark ms-1"
+                      onClick={() => {
+   
+                      const existingProductIndex = cart.findIndex(item => item._id === product._id);
+                      if (existingProductIndex !== -1) {
+     
+                      const updatedCart = [...cart];
+                      updatedCart[existingProductIndex].quantity += 1;
+                     setCart(updatedCart);
+                    localStorage.setItem("cart", JSON.stringify(updatedCart));
+                    toast.success("Quantity Updated in cart");
+                    } else {
+                    setCart([...cart, { ...product, quantity: 1 }]);
+                    localStorage.setItem("cart", JSON.stringify([...cart, { ...product, quantity: 1 }]));
+                    toast.success("Item Added to cart");
+                    }
+                   }}
+                   >
+                    ADD TO CART
+                 </button>
           {/* Button to show/hide reviews */}
           <button className="btn btn-primary ms-1" onClick={toggleReviews}>
             {showReviews ? 'Hide Reviews' : 'Show Reviews'}
           </button>
-          {/* Display reviews if showReviews is true */}
+          
           {showReviews && (
             <div>
               <hr />
@@ -335,18 +340,26 @@ const ProductDetails = () => {
                   More Details
                 </button>
                 <button
-                  className="btn btn-secondary ms-1"
-                  onClick={() => {
-                    setCart([...cart, p]);
-                    localStorage.setItem(
-                      "cart",
-                      JSON.stringify([...cart, p])
-                    );
+                     className="btn btn-dark ms-1"
+                      onClick={() => {
+   
+                      const existingProductIndex = cart.findIndex(item => item._id === product._id);
+                      if (existingProductIndex !== -1) {
+     
+                      const updatedCart = [...cart];
+                      updatedCart[existingProductIndex].quantity += 1;
+                     setCart(updatedCart);
+                    localStorage.setItem("cart", JSON.stringify(updatedCart));
+                    toast.success("Quantity Updated in cart");
+                    } else {
+                    setCart([...cart, { ...product, quantity: 1 }]);
+                    localStorage.setItem("cart", JSON.stringify([...cart, { ...product, quantity: 1 }]));
                     toast.success("Item Added to cart");
-                  }}
-                >
-                  Add to Cart
-                </button>
+                    }
+                   }}
+                   >
+                    ADD TO CART
+                 </button>
               </div>
             </div>
           ))}

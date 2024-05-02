@@ -81,17 +81,29 @@ const CategoryProduct = () => {
                     >
                       More Details
                     </button>
-                    <button className="btn btn-dark ms-1"
-                      onClick={() => {
-                        setCart([...cart, p]);
-                        localStorage.setItem(
-                          "cart",
-                          JSON.stringify([...cart, p])
-                        );
-                        toast.success("Item Added to cart");
-                      }}>
-                      ADD TO CART
-                    </button>
+                    <button
+  className="btn btn-dark ms-1"
+  onClick={() => {
+    // Check if the product is already in the cart
+    const existingProductIndex = cart.findIndex(item => item._id === p._id);
+    if (existingProductIndex !== -1) {
+      // If the product is already in the cart, increase its quantity
+      const updatedCart = [...cart];
+      updatedCart[existingProductIndex].quantity += 1;
+      setCart(updatedCart);
+      localStorage.setItem("cart", JSON.stringify(updatedCart));
+      toast.success("Quantity Updated in cart");
+    } else {
+      // If the product is not in the cart, add it to the cart
+      setCart([...cart, { ...p, quantity: 1 }]);
+      localStorage.setItem("cart", JSON.stringify([...cart, { ...p, quantity: 1 }]));
+      toast.success("Item Added to cart");
+    }
+  }}
+>
+  ADD TO CART
+</button>
+
                   </div>
                 </div>
               ))}

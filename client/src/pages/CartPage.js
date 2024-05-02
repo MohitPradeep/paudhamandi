@@ -21,7 +21,7 @@ const CartPage = () => {
     try {
       let total = 0;
       cart?.map((item) => {
-        total = total + item.price;
+        total = total + item.price * item.quantity; 
       });
       return total.toLocaleString("en-IN", {
         style: "currency",
@@ -31,6 +31,7 @@ const CartPage = () => {
       console.log(error);
     }
   };
+
   //detele item
   const removeCartItem = (pid) => {
     try {
@@ -76,6 +77,46 @@ const CartPage = () => {
       setLoading(false);
     }
   };
+
+  // Increase quantity of item in cart
+const increaseQuantity = (pid) => {
+  try {
+    const updatedCart = cart.map(item => {
+      if (item._id === pid) {
+        return {
+          ...item,
+          quantity: item.quantity + 1
+        };
+      }
+      return item;
+    });
+    setCart(updatedCart);
+    localStorage.setItem("cart", JSON.stringify(updatedCart));
+  } catch (error) {
+    console.log(error);
+    toast.error("Something went wrong");
+  }
+};
+
+// Decrease quantity of item in cart
+const decreaseQuantity = (pid) => {
+  try {
+    const updatedCart = cart.map(item => {
+      if (item._id === pid && item.quantity > 1) {
+        return {
+          ...item,
+          quantity: item.quantity - 1
+        };
+      }
+      return item;
+    });
+    setCart(updatedCart);
+    localStorage.setItem("cart", JSON.stringify(updatedCart));
+  } catch (error) {
+    console.log(error);
+  }
+};
+
   return (
     <Layout>
       <div className="container">
@@ -110,7 +151,12 @@ const CartPage = () => {
                   <p>{p.name}</p>
                   <p>{p.description.substring(0, 30)}</p>
                   <p>Price :₹ {p.price}</p>
-                  <p>Quantity : 1</p>
+                  <p>
+                     Quantity:{" "}
+                   <button className="btn btn-sm btn-outline-secondary" onClick={() => decreaseQuantity(p._id)}>-</button>
+                   <span className="mx-2">{p.quantity}</span>
+                   <button className="btn btn-sm btn-outline-secondary" onClick={() => increaseQuantity(p._id)}>+</button>
+                  </p>
                   <p className="card-text">
                     {p?.quantity === 0 ? (
                     <h3 style={{ color: "red" }}>Out of Stock</h3>

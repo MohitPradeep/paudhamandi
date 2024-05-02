@@ -229,18 +229,26 @@ const HomePage = () => {
                       More Details
                     </button>
                     <button
-                      className="btn btn-dark ms-1"
+                     className="btn btn-dark ms-1"
                       onClick={() => {
-                        setCart([...cart, p]);
-                        localStorage.setItem(
-                          "cart",
-                          JSON.stringify([...cart, p])
-                        );
-                        toast.success("Item Added to cart");
-                      }}
-                    >
-                      ADD TO CART
-                    </button>
+   
+                      const existingProductIndex = cart.findIndex(item => item._id === p._id);
+                      if (existingProductIndex !== -1) {
+     
+                      const updatedCart = [...cart];
+                      updatedCart[existingProductIndex].quantity += 1;
+                     setCart(updatedCart);
+                    localStorage.setItem("cart", JSON.stringify(updatedCart));
+                    toast.success("Quantity Updated in cart");
+                    } else {
+                    setCart([...cart, { ...p, quantity: 1 }]);
+                    localStorage.setItem("cart", JSON.stringify([...cart, { ...p, quantity: 1 }]));
+                    toast.success("Item Added to cart");
+                    }
+                   }}
+                   >
+                    ADD TO CART
+                 </button>
                   </div>
                 </div>
               </div>

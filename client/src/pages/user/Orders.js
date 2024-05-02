@@ -6,10 +6,12 @@ import axios from "axios";
 import { useAuth } from "../../context/auth";
 import moment from "moment";
 import jsPDF from "jspdf";
+import { useCart } from "../../context/cart"; 
 
 const Orders = () => {
   const navigate = useNavigate();
   const [orders, setOrders] = useState([]);
+  const [cart, setCart] = useCart();
   const [auth, setAuth] = useAuth();
   const getOrders = async () => {
     try {
@@ -133,6 +135,8 @@ const Orders = () => {
                         <div className="col-md-8">
                           <p>{p.name}</p>
                           <p>Price : {p.price}</p>
+                         {/* <p>Quantity: {p.quantity}</p>*/}
+                  
                         </div>
                       </div>
                     ))}
